@@ -1,13 +1,11 @@
 package nl.capgemini.divingweb.api;
 
-import com.sun.org.apache.regexp.internal.RE;
 import nl.capgemini.divingweb.model.Suit;
 import nl.capgemini.divingweb.service.SuitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @RestController
