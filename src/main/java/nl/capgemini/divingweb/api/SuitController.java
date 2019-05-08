@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @RestController
@@ -40,14 +41,16 @@ public class SuitController {
         }
     }
 
-    // put
-    // find the Suit by id
-    // set the properties of the suitIn to the saved suit
     @PutMapping("{id}")
-    public Suit updateById(@PathVariable long id, @RequestBody Suit suitIn) {
+    public ResponseEntity<Suit> updateById(@PathVariable long id, @RequestBody Suit suitIn) {
 
-
-        return this.suitService.edit(id, suitIn); // FIX THIS 
+       Optional<Suit> optionalSuit = this.suitService.edit(id, suitIn);
+       if(optionalSuit.isPresent()) {
+           return ResponseEntity.ok(optionalSuit.get());
+       }
+       else {
+           return ResponseEntity.notFound().build();
+       }
     }
 
     @DeleteMapping("{id}")

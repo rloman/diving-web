@@ -15,6 +15,11 @@ public class Suit {
     private Size size;
     private Color color;
 
+    public Suit() {
+        this.setSize(Size.MEDIUM);
+        this.setColor(Color.BLACK);
+    }
+
     public long getId() {
         return id;
     }
@@ -33,5 +38,13 @@ public class Suit {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Suit{" +
+                "size=" + size +
+                ", color=" + color +
+                '}';
     }
 }

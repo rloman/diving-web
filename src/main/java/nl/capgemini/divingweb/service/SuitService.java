@@ -5,6 +5,7 @@ import nl.capgemini.divingweb.persistence.SuitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -18,11 +19,19 @@ public class SuitService {
 
     public Optional<Suit> edit(long id, Suit suitIn) {
         // first get the target
-        Suit target = findById(id).get(); // rloman refactor to in service
-        target.setColor(suitIn.getColor());
-        target.setSize(suitIn.getSize());
+        Optional<Suit> optionalTarget = findById(id);
+        if(optionalTarget.isPresent()) {
+            Suit target = optionalTarget.get();
+            target.setColor(suitIn.getColor());
+            target.setSize(suitIn.getSize());
 
-        return Optional.of(this.suitRepository.save(target));
+            this.suitRepository.save(target);
+
+            return Optional.of(target);
+        }
+        else {
+            return Optional.empty();
+        }
     }
 
     public Suit save(Suit suit) {
