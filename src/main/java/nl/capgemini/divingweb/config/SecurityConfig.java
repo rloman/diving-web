@@ -1,5 +1,6 @@
 package nl.capgemini.divingweb.config;
 
+import nl.capgemini.divingweb.security.UserAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -20,19 +21,15 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static final String APIROLE = "APIROLE";
+    public static final String API = "API";
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth,
-                                @Value("${api.username}") String apiUsername,
-                                @Value("${api.password}") String apiPassword) throws Exception {
+    private UserAuthenticationProvider authenticationProvider;
 
-        auth.
-                inMemoryAuthentication()
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .withUser(apiUsername)
-                .password(apiPassword)
-                .roles(APIROLE);
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.authenticationProvider(authenticationProvider);
     }
 
     @Configuration
@@ -43,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http.csrf().disable();
             http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            http.authorizeRequests().antMatchers("/api/**").hasRole(APIROLE).and().httpBasic();
+            http.authorizeRequests().antMatchers("/api/**").hasRole(API).and().httpBasic();
 
             http.authorizeRequests().anyRequest().permitAll();
 
