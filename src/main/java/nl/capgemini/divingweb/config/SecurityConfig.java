@@ -47,6 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             http.authorizeRequests().anyRequest().permitAll();
 
+            http.cors();
+
             // the rest is implicit denied
         }
     }
