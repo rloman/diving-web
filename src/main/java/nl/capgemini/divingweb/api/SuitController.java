@@ -12,7 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/suits")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200",
+        allowCredentials = "true", allowedHeaders = "*",
+        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT, RequestMethod.OPTIONS})
+
 public class SuitController {
 
     @Autowired

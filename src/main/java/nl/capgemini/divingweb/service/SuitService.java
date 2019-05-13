@@ -1,10 +1,13 @@
 package nl.capgemini.divingweb.service;
 
+import nl.capgemini.divingweb.model.Color;
+import nl.capgemini.divingweb.model.Size;
 import nl.capgemini.divingweb.model.Suit;
 import nl.capgemini.divingweb.persistence.SuitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.swing.text.html.Option;
 import java.util.Optional;
 
@@ -15,6 +18,17 @@ public class SuitService {
 
     public SuitService(SuitRepository suitRepository) {
         this.suitRepository = suitRepository;
+    }
+
+    @PostConstruct
+    public void setUp() {
+        Color[] colors = Color.values();
+        for(int i = 0;i<Color.values().length;i++) {
+            Suit newSuit = new Suit();
+            newSuit.setColor(Color.values()[i]);
+            newSuit.setSize(Size.MEDIUM);
+            this.suitRepository.save(newSuit);
+        }
     }
 
     public Optional<Suit> edit(long id, Suit suitIn) {
