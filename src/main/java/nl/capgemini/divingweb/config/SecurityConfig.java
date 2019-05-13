@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             http.authorizeRequests().anyRequest().permitAll();
 
-            http.cors();
+            http.cors(); // this if for getting the put running rloman remember this!!!
 
             // the rest is implicit denied
         }
