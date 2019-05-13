@@ -16,7 +16,7 @@ import java.util.Optional;
 // this must be done for Angular Security using withSecurity in the httClient::get(...{withSecurity: true})
 @CrossOrigin(origins = "http://localhost:4200",
         allowCredentials = "true", allowedHeaders = "*",
-        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT})
+        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT, RequestMethod.OPTIONS})
 public class SuitController {
 
     @Autowired
