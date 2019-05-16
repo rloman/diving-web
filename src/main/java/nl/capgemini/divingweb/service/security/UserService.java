@@ -1,9 +1,10 @@
 package nl.capgemini.divingweb.service.security;
 
+import nl.capgemini.divingweb.model.security.Authority;
+import nl.capgemini.divingweb.model.security.AuthorityName;
 import nl.capgemini.divingweb.model.security.User;
 import nl.capgemini.divingweb.persistence.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,9 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +25,9 @@ public class UserService implements UserDetailsService {
     private UserRepository repository;
 
     @Autowired
+    private AuthorityService authorityService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostConstruct
@@ -37,7 +38,13 @@ public class UserService implements UserDetailsService {
             User user = new User();
             user.setUsername(dummyUser);
             user.setPassword(passwordEncoder.encode(dummyPassword));
+            Authority a = new Authority(AuthorityName.API);
+            this.authorityService.save(a);
+
+            user.getAuthorities().add(a);
+            a.getUsers().add(user);
             this.repository.save(user);
+            this.authorityService.save(a);
         }
 
     }
@@ -48,7 +55,7 @@ public class UserService implements UserDetailsService {
 
         User user = this.repository.findByUsername(username);
 
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
 
         return userDetails;
     }
