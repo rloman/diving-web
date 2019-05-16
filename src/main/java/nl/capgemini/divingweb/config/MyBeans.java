@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class MyBeans {
 
-@Autowired
+    @Autowired
     private UserService userService;
 
 
@@ -21,7 +21,7 @@ public class MyBeans {
         return new BCryptPasswordEncoder();
     }
 
-    
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider(@Autowired PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
