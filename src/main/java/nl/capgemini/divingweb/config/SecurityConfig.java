@@ -1,9 +1,9 @@
 package nl.capgemini.divingweb.config;
 
-import nl.capgemini.divingweb.security.UserAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String API = "API";
 
     @Autowired
-    private UserAuthenticationProvider authenticationProvider;
+    private DaoAuthenticationProvider authenticationProvider;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             httpSecurity.csrf().disable();
             httpSecurity.headers().frameOptions().disable();
             httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            httpSecurity.authorizeRequests().antMatchers("/api/**").hasRole(API).and().httpBasic();
+            httpSecurity.authorizeRequests().antMatchers("/api/**").authenticated().and().httpBasic();//hasRole(API).and().httpBasic();
 
             httpSecurity.authorizeRequests().anyRequest().permitAll();
 
