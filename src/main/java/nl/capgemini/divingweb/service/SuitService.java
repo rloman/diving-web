@@ -4,12 +4,9 @@ import nl.capgemini.divingweb.model.Color;
 import nl.capgemini.divingweb.model.Size;
 import nl.capgemini.divingweb.model.Suit;
 import nl.capgemini.divingweb.persistence.SuitRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.swing.text.html.Option;
-import java.awt.*;
 import java.util.Optional;
 
 @Service
