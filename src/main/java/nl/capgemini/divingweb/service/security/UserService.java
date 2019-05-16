@@ -42,10 +42,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public boolean authenticate(String username, String password) {
-        return this.repository.findByUsernameAndPassword(username, password).isPresent();
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
