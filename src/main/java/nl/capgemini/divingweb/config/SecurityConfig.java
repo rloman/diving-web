@@ -1,5 +1,6 @@
 package nl.capgemini.divingweb.config;
 
+import nl.capgemini.divingweb.model.security.AuthorityName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -39,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             httpSecurity.csrf().disable();
             httpSecurity.headers().frameOptions().disable();
             httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            httpSecurity.authorizeRequests().antMatchers("/api/**").authenticated().and().httpBasic();//hasRole(API).and().httpBasic();
+            httpSecurity.authorizeRequests().antMatchers("/api/**").hasAuthority(AuthorityName.API.toString()).and().httpBasic();
 
             httpSecurity.authorizeRequests().anyRequest().permitAll();
 
