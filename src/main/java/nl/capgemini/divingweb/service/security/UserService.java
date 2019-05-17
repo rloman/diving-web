@@ -38,7 +38,8 @@ public class UserService implements UserDetailsService {
             User user = new User();
             user.setUsername(dummyUser);
             user.setPassword(passwordEncoder.encode(dummyPassword));
-            Authority a = new Authority(AuthorityName.API);
+            Authority a = new Authority();
+            a.setName(AuthorityName.API);
             this.authorityService.save(a);
 
             user.getAuthorities().add(a);

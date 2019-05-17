@@ -21,24 +21,8 @@ public class Authority implements GrantedAuthority {
    @ManyToMany(mappedBy = "authorities", fetch = FetchType.EAGER)
    private List<User> users = new ArrayList<>();
 
-   public Authority() {
-
-   }
-
-    public Authority(@NotNull AuthorityName name) {
-        this.name = name;
-    }
-
     public Long getId() {
        return id;
-   }
-
-   public void setId(Long id) {
-       this.id = id;
-   }
-
-   public AuthorityName getName() {
-       return name;
    }
 
    public void setName(AuthorityName name) {
@@ -47,10 +31,6 @@ public class Authority implements GrantedAuthority {
 
    public List<User> getUsers() {
        return users;
-   }
-
-   public void setUsers(List<User> users) {
-       this.users = users;
    }
 
     @Override
