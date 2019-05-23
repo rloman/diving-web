@@ -1,9 +1,6 @@
 package nl.capgemini.divingweb.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Suit {
@@ -12,7 +9,10 @@ public class Suit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Enumerated(EnumType.STRING)
     private Size size;
+
+    @Enumerated(EnumType.STRING)
     private Color color;
 
     public Suit() {
