@@ -116,13 +116,18 @@ public class DivingWebApplicationIT {
             Assert.assertEquals(Color.RED, suit.getColor());
         }
 
+    }
+
+
+    @Test
+    public void testDelete() {
         // delete
         {
             Suit suit = new Suit();
             suit.setSize(Size.S);
             suit.setColor(Color.BLACK);
 
-            savedId = this.suitService.save(suit).getId();
+            long savedId = this.suitService.save(suit).getId();
 
             Assert.assertNotEquals(savedId, 0);
 
@@ -131,8 +136,6 @@ public class DivingWebApplicationIT {
             Optional<Suit> optionalSuit = this.suitService.findById(savedId);
             Assert.assertFalse(optionalSuit.isPresent());
         }
-
-
     }
 
 
